@@ -33,23 +33,23 @@ class ClearInventory extends PluginBase{
     const PREFIX = TextFormat::AQUA . "ClearInv" . TextFormat::GOLD . " > ";
 
     public function onEnable() : void{
-        $this->getLogger()->info("ClearInv " . self::VERSION . " by iiFlamiinBlaze is enabled");
+        $this->getLogger()->info("ClearInv " . self::VERSION . "by iiFlamiinBlaze is enabled");
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
         if($command->getName() === "clearinv"){
             if(!$sender instanceof Player){
                 $sender->sendMessage(self::PREFIX . TextFormat::RED . "Use this command in-game");
-                return false;
+                return true;
             }
             if(!$sender->hasPermission("clearinv.command")){
                 $sender->sendMessage(self::PREFIX . TextFormat::RED . "You do not have permission to use this command");
-                return false;
+                return true;
             }
             if(empty($args[0])){
                 $sender->getInventory()->clearAll();
                 $sender->sendMessage(self::PREFIX . TextFormat::GREEN . "Your inventory has been cleared");
-                return false;
+                return true;
             }
             if($this->getServer()->getPlayer($args[1])){
                 $player = $this->getServer()->getPlayer($args[1]);
@@ -59,7 +59,7 @@ class ClearInventory extends PluginBase{
                 $sender->sendMessage(self::PREFIX . TextFormat::GREEN . "You have cleared $name's inventory");
             }else{
                 $sender->sendMessage(self::PREFIX . TextFormat::RED . "Player not found");
-                return false;
+                return true;
             }
         }
         return true;
